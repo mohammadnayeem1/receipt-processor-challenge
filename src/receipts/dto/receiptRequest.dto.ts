@@ -12,7 +12,7 @@ import {
 export class RecieptRequestDto {
   @IsString()
   @Matches(/^[\w\s\-&]+$/, {
-    message: 'invalid retailer name',
+    message: 'The receipt is invalid: invalid retailer name',
   })
   retailer: string;
 
@@ -21,13 +21,13 @@ export class RecieptRequestDto {
 
   @IsString()
   @Matches(/^([01]\d|2[0-3]):[0-5]\d$/, {
-    message: 'invalid purchaseTime format must be in HH:mm format',
+    message: 'The receipt is invalid: purchaseTime format must be in HH:mm format',
   })
   purchaseTime: string;
 
   @IsArray()
   @ArrayMinSize(1, {
-    message: 'items must contain atleast one items',
+    message: 'The receipt is invalid: items must contain atleast one items',
   })
   @ValidateNested({ each: true })
   @Type(() => ItemDto)
@@ -35,7 +35,7 @@ export class RecieptRequestDto {
 
   @IsString()
   @Matches(/^\d+\.\d{2}$/, {
-    message: 'invalid total format valid example: 44.44',
+    message: 'The receipt is invalid: total format invalid -valid example: 44.44',
   })
   total: string;
 }
