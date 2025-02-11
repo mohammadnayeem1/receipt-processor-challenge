@@ -3,16 +3,17 @@ import { RecieptRequestDto } from './dto/receiptRequest.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { PointsResponseDto } from './dto/pointsResonse.dto';
 import { ReceiptResponseDto } from './dto/receiptResponse.dto';
-import { pointsHelper } from './helpers/pointsHelper';
+import { PointsHelper } from './helpers/PointsHelper';
 
 @Injectable()
 export class ReceiptsService {
+ constructor(private readonly pointsHelper: PointsHelper){}
 
   private inMemoryDb = new Map<string,number>()
 
   create(createReceiptDto: RecieptRequestDto) : ReceiptResponseDto {
     const id = uuidv4();
-    const points = pointsHelper(createReceiptDto);
+    const points = this.pointsHelper.pointsHelper(createReceiptDto);
     this.inMemoryDb.set(id,points);
     console.log(`Receipt Created: ID=${id}, Points=${points}`)
     return { id };
